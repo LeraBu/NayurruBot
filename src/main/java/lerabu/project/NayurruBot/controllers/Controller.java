@@ -1,21 +1,20 @@
-package lerabu.project.NayurruBot.service;
+package lerabu.project.NayurruBot.controllers;
 
 import lerabu.project.NayurruBot.config.BotConfig;
-import org.springframework.stereotype.Component;
+import lerabu.project.NayurruBot.service.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-@Component
-public class TelegramBot extends TelegramLongPollingBot {
+import static lerabu.project.NayurruBot.service.Service.startCommandReceive;
 
+public class Controller extends TelegramLongPollingBot {
     final BotConfig config;
 
-    public TelegramBot(BotConfig config) {
+    public Controller(BotConfig config) {
         this.config = config;
     }
-
 
     @Override
     public String getBotUsername() {
@@ -44,12 +43,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    private void startCommandReceive(long chatId, String name) {
-        String answer = "Hi, " + name + "! Nice to meet you!";
-        sendMessage(chatId, answer);
-    }
-
-    private void sendMessage(long chatId, String textToSend) {
+    public void sendMessage(long chatId, String textToSend) {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
         message.setText(textToSend);
@@ -62,5 +56,3 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
 }
-
-
